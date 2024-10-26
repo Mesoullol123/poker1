@@ -8,21 +8,23 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
-            font-size: 36px; /* Increase base font size */
         }
         h1 {
-            font-size: 72px; /* Increase font size for h1 */
+            font-size: 36px;
         }
         h2 {
-            font-size: 56px; /* Increase font size for h2 */
+            font-size: 28px;
         }
         p {
-            font-size: 40px; /* Increase font size for paragraphs */
+            font-size: 20px;
         }
         button {
             padding: 10px 15px;
             margin-top: 10px;
-            font-size: 18px; /* Increase font size for buttons */
+            font-size: 24px;
+        }
+        .big-number {
+            font-size: 28px; /* Adjust this size as needed */
         }
     </style>
 </head>
@@ -74,7 +76,7 @@
             const drawnCardsDiv = document.getElementById('drawnCards');
             drawnCardsDiv.innerHTML = "<h2>Drawn Cards:</h2>";
             drawnCards.forEach(card => {
-                drawnCardsDiv.innerHTML += `<p>${card.rank}  ${card.suit}</p>`;
+                drawnCardsDiv.innerHTML += `<p><span class="big-number">${card.rank}</span>  ${card.suit}</p>`;
             });
 
             // Show the option for drawing an additional card
@@ -94,7 +96,7 @@
         document.getElementById('yesBtn').addEventListener('click', function() {
             const additionalCard = drawOneCard(); // Draw one additional card
             const additionalCardDiv = document.getElementById('additionalCard');
-            additionalCardDiv.innerHTML = `<h2>Additional Card:</h2><p>${additionalCard.rank}  ${additionalCard.suit}</p>`;
+            additionalCardDiv.innerHTML = `<h2>Additional Card:</h2><p><span class="big-number">${additionalCard.rank}</span>  ${additionalCard.suit}</p>`;
             disableButtons(); // Disable buttons after choice
         });
 
