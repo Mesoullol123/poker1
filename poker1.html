@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poker1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        button {
+            padding: 10px 15px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body bgcolor="35654d">
+    <h1><center>Poker1</h1>
+    <center><button id="drawCardsBtn">Draw Two Cards</button>
+    <div id="drawnCards"></div>
+    <div id="additionalCardSection" style="display: none;">
+        <p>Do you want to draw an additional card?</p>
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
+    </div>
+    <div id="additionalCard"></div>
+
+    <script>
+        const SUITS = ['♥', '♦', '♣', '♠'];
+        const RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+        let deck = [];
+
+        function createDeck() {
+            deck = [];
+            for (let rank of RANKS) {
+                for (let suit of SUITS) {
+                    deck.push({rank, suit});
+                }
+            }
+        }
+
+        function shuffleDeck() {
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+        }
+
+        function drawTwoCards() {
+            return [deck.pop(), deck.pop()];
+        }
+
+        function drawOneCard() {
+            return deck.pop();
+        }
+
+        document.getElementById('drawCardsBtn').addEventListener('click', function() {
+            createDeck();  // Create a new deck
+            shuffleDeck(); // Shuffle the deck
+
+            const drawnCards = drawTwoCards(); // Draw two cards
+            const drawnCardsDiv = document.getElementById('drawnCards');
+            drawnCardsDiv.innerHTML = "<h2>Drawn Cards:</h2>";
+            drawnCards.forEach(card => {
+                drawnCardsDiv.innerHTML += `<p>${card.rank}  ${card.suit}</p>`;
+            });
+
+            // Show the option for drawing an additional card
+            document.getElementById('additionalCardSection').style.display = 'block';
+
+            // Disable the Draw Two Cards button
+            const drawCardsBtn = document.getElementById('drawCardsBtn');
+            drawCardsBtn.disabled = true;
+            drawCardsBtn.innerText = 'Cards Drawn'; // Optional: Change button text
+        });
+
+        function disableButtons() {
+            document.getElementById('yesBtn').disabled = true;
+            document.getElementById('noBtn').disabled = true;
+        }
+
+        document.getElementById('yesBtn').addEventListener('click', function() {
+            const additionalCard = drawOneCard(); // Draw one additional card
+            const additionalCardDiv = document.getElementById('additionalCard');
+            additionalCardDiv.innerHTML = `<h2>Additional Card:</h2><p>${additionalCard.rank}  ${additionalCard.suit}</p>`;
+            disableButtons(); // Disable buttons after choice
+        });
+
+        document.getElementById('noBtn').addEventListener('click', function() {
+            const additionalCardDiv = document.getElementById('additionalCard');
+            additionalCardDiv.innerHTML = "<h2>No additional card drawn.</h2>";
+            disableButtons(); // Disable buttons after choice
+        });
+    </script>
+</body>
+</html>
